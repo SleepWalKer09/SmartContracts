@@ -1,0 +1,38 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol"; /*Modifica la URL del token URI que apunta a la imagen NFT*/
+import "@openzeppelin/contracts/utils/Counters.sol"; /*libreria del contador*/
+
+
+/*
+Partes de un NFT: 
+    Imagen, nombre, descripcion
+
+Estandares par NFT:
+    EIP-721: Non-Fungible Token Standard
+    EIP-1155: Multi Token Standard
+
+    EIP721 -> BEP721
+    EIP1155 -> BEP1155
+*/
+
+/*#######################
+Creacion de un NFT en la red de Binance
+#########################*/
+
+contract MyNFT is ERC721URIStorage {
+    uint256 private _counter;
+    
+    constructor() ERC721("Code And Hacks", "CNH") {
+        _counter = 0;
+    }
+    
+    function mint(address _receiver, string memory tokenURI) public{
+        require(_counter < 1000, "Minted all");
+        _counter++;  
+        
+        _mint(_receiver, _counter);
+        _setTokenURI(_counter, tokenURI);
+    }
+}
